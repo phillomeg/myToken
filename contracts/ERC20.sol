@@ -5,7 +5,6 @@ import "./IERC20.sol";
 
 contract ERC20Token {
 
-// state variables
     string  tokenName;
     string  symbol;
     uint256 decimals;
@@ -22,16 +21,16 @@ contract ERC20Token {
     uint tokens
     );
 
-  event Transfer(
+    event Transfer(
     address indexed from,
     address indexed to,
     uint tokens
     );
 
     constructor() {
-        tokenName = "Spidy";
+        tokenName = "megphillo";
         totalSupplys = 1000000000000000;
-        symbol = "SDTN";
+        symbol = "MGPO";
         decimals = 18;
         owner = msg.sender;
         balances[msg.sender] += totalSupplys;
@@ -40,31 +39,22 @@ contract ERC20Token {
 
     function transfer(address _to, uint _token) public returns (bool) {
 
-        // chacking if the Address provided by the receiver is correct
         require(msg.sender != address(0), "This Address is not a vaild");
 
-        // checking if the balances of the sender is equal or greater than the totalToken 
         require(balances[msg.sender] >= _token,"You dont have alot of Token");
 
-        // calculating the 10 % when ever we make a transfar
         uint256 _fee = (_token * 10) / 100;  
 
-        // Removing the token that wes withdorw form the sender accunts
         balances[owner] -= _fee;  
 
-        // adding the wiithdorw to the 10 % 
         uint256 afterDeduction = _token - _fee;
 
-        // removing the token from the User Accunt
         balances[msg.sender] = balances[msg.sender] -_token;
 
-        // adding the token to the receiver accunt and updating the balances
         balances[_to] = balances[_to] + afterDeduction;
 
-        // send a soccess message to the user when all that wes needed is aproved
         emit Transfer(msg.sender, _to, _token);
 
-        // send a soccess messge to the userr when all that wes needed is aproved
         emit Transfer(msg.sender, owner, _fee);
 
         return true;
@@ -90,10 +80,8 @@ contract ERC20Token {
     
     function transferFrom(address from, address to, uint _tokens) private  returns (bool) {
         
-        // chacking if the Address provided by the receiver is correct
         require(msg.sender != address(0), "this address is in Valid");
 
-        // checking if the balances of the sender is equal or greater than the totalToken 
         require(balances[from] >= _tokens, "You dont have alot of Token");
 
         require(allowed[from][msg.sender] >= _tokens, "You dont have alot of token");
