@@ -102,7 +102,7 @@ contract ERC20Token {
         return balances[tokenOwner];
     }
 
-     function  totalSupply() public view returns (uint256) {
+    function  totalSupply() public view returns (uint256) {
         
         return totalSupplys;
     }
